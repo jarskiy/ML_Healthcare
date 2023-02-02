@@ -300,8 +300,5 @@ def user_predict():
         st.write(U_pred[0], " - You are not at high risk :)")
     else:
         st.write(U_pred[0], " - You are at high risk :(")
-<<<<<<< HEAD
 user_predict()  #Predict the status of user.
 
-
-#-------------------------------------------------------------------------END------------------------------------------------------------------------#
