@@ -30,7 +30,7 @@ tit2.image("healthcare2.png")
 st.sidebar.title("Dataset and Classifier")
 
 dataset_name=st.sidebar.selectbox("Select Dataset: ",('Heart Attack',"Breast Cancer"))
-classifier_name = st.sidebar.selectbox("Select Classifier: ","Decision Trees","Random Forest"))
+classifier_name = st.sidebar.selectbox("Select Classifier: "Decision Trees","Random Forest"))
 
 LE=LabelEncoder()
 def get_dataset(dataset_name):
