@@ -103,20 +103,14 @@ def add_parameter_ui(clf_name):
     st.sidebar.write("Select values: ")
 
     if clf_name == "Decision Trees":
-        M = st.sidebar.slider("max_depth", 2, 20)
-        C = st.sidebar.selectbox("Criterion", ("gini", "entropy"))
-        SS = st.sidebar.slider("min_samples_split", 1, 10)
-        params["M"] = M
-        params["C"] = C
-        params["SS"] = SS
+        R = st.sidebar.slider("Regularization", 0.1, 10.0, step=0.1)
+        MI = st.sidebar.slider("max_iter", 50, 400, step=50)
+        params["R"] = R
+        params["MI"] = MI
 
     elif clf_name == "Random Forest":
-        N = st.sidebar.slider("n_estimators", 50, 500, step=50, value=100)
-        M = st.sidebar.slider("max_depth", 2, 20)
-        C = st.sidebar.selectbox("Criterion", ("gini", "entropy"))
-        params["N"] = N
-        params["M"] = M
-        params["C"] = C
+        K = st.sidebar.slider("n_neighbors", 1, 20)
+        params["K"] = K
 
     RS = st.sidebar.slider("Random State", 0, 100)
     params["RS"] = RS
@@ -129,12 +123,10 @@ params = add_parameter_ui(classifier_name)
 def get_classifier(clf_name, params):
     global clf
     if clf_name == "Decision Trees":
-        clf = DecisionTreeClassifier(
-            max_depth=params["M"], criterion=params["C"], min_impurity_split=params["SS"])
+        clf = LogisticRegression(C=params["R"], max_iter=params["MI"])
 
     elif clf_name == "Random Forest":
-        clf = RandomForestClassifier(
-            n_estimators=params["N"], max_depth=params["M"], criterion=params["C"])
+        clf = KNeighborsClassifier(n_neighbors=params["K"])
 
     return clf
 
