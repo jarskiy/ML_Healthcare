@@ -118,6 +118,10 @@ def add_parameter_ui(clf_name):
         params["M"] = M
         params["C"] = C
 
+    RS = st.sidebar.slider("Random State", 0, 100)
+    params["RS"] = RS
+    return params
+
 
 params = add_parameter_ui(classifier_name)
 
