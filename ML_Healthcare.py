@@ -21,28 +21,26 @@ from sklearn.preprocessing import MinMaxScaler, LabelEncoder, StandardScaler
 from sklearn.metrics import precision_recall_fscore_support as score, mean_squared_error
 from sklearn.metrics import confusion_matrix,accuracy_score
 from sklearn.decomposition import PCA
-
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 start_time=time.time()  #Program Start time
 #Titles
-tit1,tit2 = st.beta_columns((4, 1))
+tit1,tit2 = st.columns((4, 1))
 tit1.markdown("<h1 style='text-align: center;'><u>Machine Learning in Healthcare</u> </h1>",unsafe_allow_html=True)
 tit2.image("healthcare2.png")
 st.sidebar.title("Dataset and Classifier")
 
 dataset_name=st.sidebar.selectbox("Select Dataset: ",('Heart Attack',"Breast Cancer"))
-classifier_name = st.sidebar.selectbox("Select Classifier: ",("Logistic Regression","KNN","SVM","Decision Trees",
-                                                              "Random Forest","Gradient Boosting","XGBoost"))
+classifier_name = st.sidebar.selectbox("Select Classifier: ","Decision Trees","Random Forest"))
 
 LE=LabelEncoder()
 def get_dataset(dataset_name):
     if dataset_name=="Heart Attack":
-        data=pd.read_csv("https://raw.githubusercontent.com/jarskiy/ML_Healthcare/tree/master/Data/heart.csv")
+        data=pd.read_csv("Data/heart.csv")
         st.header("Heart Attack Prediction")
         return data
 
     else:
-        data=pd.read_csv("https://raw.githubusercontent.com/jarskiy/ML_Healthcare/tree/master/Data/BreastCancer.csv")
+        data=pd.read_csv("Data/BreastCancer.csv")
         
         data["diagnosis"] = LE.fit_transform(data["diagnosis"])
         data.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -67,7 +65,7 @@ X,Y=selected_dataset(dataset_name)
 
 #Plot output variable
 def plot_op(dataset_name):
-    col1, col2 = st.beta_columns((1, 5))
+    col1, col2 = st.columns((1, 5))
     plt.figure(figsize=(12, 3))
     plt.title("Classes in 'Y'")
     if dataset_name == "Heart Attack":
@@ -215,7 +213,7 @@ def compute(Y_pred,Y_test):
     plt.colorbar()
     st.pyplot()
 
-    c1, c2 = st.beta_columns((4,3))
+    c1, c2 = st.columns((4,3))
     #Output plot
     plt.figure(figsize=(12,6))
     plt.scatter(range(len(Y_pred)),Y_pred,color="yellow",lw=5,label="Predictions")
@@ -275,7 +273,7 @@ def user_inputs_ui(dataset_name,data):
 #User values
 st.markdown("<hr>",unsafe_allow_html=True)
 st.header("2) User Values")
-with st.beta_expander("See more"):
+with st.expander("See more"):
     st.markdown("""
     In this section you can use your own values to predict the target variable. 
     Input the required values below and you will get your status based on the values. <br>
@@ -301,4 +299,3 @@ def user_predict():
     else:
         st.write(U_pred[0], " - You are at high risk :(")
 user_predict()  #Predict the status of user.
-
